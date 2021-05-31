@@ -53,16 +53,3 @@ for name,model in models:
     print(name+' : ',cv.mean())
 
 print(results)
-"""
-train,test = train_test_split(df,test_size=0.25,random_state=3)
-#!-------------------------------------------------------------------------------------
-X_train = train[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
-y_train = train.Species
-
-X_test = test[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
-y_test = test.Species
-
-
-
-#!----------------------------------------------------------------------------------------
-"""
