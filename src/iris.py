@@ -1,7 +1,5 @@
-from mmap import ALLOCATIONGRANULARITY
 import numpy as np # linear algebra
 import pandas as pd
-from scipy.sparse.construct import random # data processing, CSV file I/O (e.g. pd.read_csv)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -13,7 +11,6 @@ from sklearn import metrics #for checking the model accuracy
 from sklearn.tree import DecisionTreeClassifier #for using Decision Tree Algoithm
 from sklearn.model_selection import cross_val_score,KFold,cross_validate
 
-from linear_regression import Y_test
 
 path = '/home/facundoic/Desktop/GitHub/ML-repository/MLprojects/data/iris-data/Iris.csv'
 df = pd.read_csv(path)
@@ -37,7 +34,7 @@ plt.show()
 
 X = df[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
 y = df.Species
-X_train, X_test,y_train,Y_test = train_test_split(X,y,test_size=0.2,random_state=5)
+X_train, X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=5)
 
 models = []
 models.append(('LR',LogisticRegression()))
