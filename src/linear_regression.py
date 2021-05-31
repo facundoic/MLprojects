@@ -6,8 +6,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 
-path = '/home/facundoic/Desktop/GitHub/ML-repository/data/marathon-data/MarathonData.csv'
-
+path = '/home/facundoic/Desktop/GitHub/ML-repository/MLprojects/data/marathon-data/MarathonData.csv'
+       
 df_marathon = pd.read_csv(path)
 df_marathon.drop(columns=['Name','id','Marathon','CATEGORY'],inplace=True)
 
@@ -43,16 +43,17 @@ plt.ylabel('Marathon Time')
 plt.show()
 
 # ----------------------------------------------------------
-df_train = df_marathon.sample(frac=0.8,random_state=0)
-df_test = df_marathon.drop(df_train.index)
+X_train = df_marathon.sample(frac=0.8,random_state=0)
+X_test = df_marathon.drop(X_train.index)
 
-Y_train = df_train.pop('MarathonTime')
-Y_test = df_test.pop('MarathonTime')
+Y_train = X_train.pop('MarathonTime')
+Y_test = X_test.pop('MarathonTime')
+
 
 model = LinearRegression()
-model.fit(df_train,Y_train)
+model.fit(X_train,Y_train)
 
-predictions = model.predict(df_test)
+predictions = model.predict(X_test)
 
 error = np.sqrt(mean_squared_error(Y_test,predictions))
 print("Error porcentual : %f" %(error*100))

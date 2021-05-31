@@ -1,5 +1,7 @@
+from mmap import ALLOCATIONGRANULARITY
 import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+import pandas as pd
+from scipy.sparse.construct import random # data processing, CSV file I/O (e.g. pd.read_csv)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -9,6 +11,9 @@ from sklearn.neighbors import KNeighborsClassifier  # for K nearest neighbours
 from sklearn import svm  #for Support Vector Machine (SVM) Algorithm
 from sklearn import metrics #for checking the model accuracy
 from sklearn.tree import DecisionTreeClassifier #for using Decision Tree Algoithm
+from sklearn.model_selection import cross_val_score,KFold,cross_validate
+
+from linear_regression import Y_test
 
 path = '/home/facundoic/Desktop/GitHub/ML-repository/MLprojects/data/iris-data/Iris.csv'
 df = pd.read_csv(path)
@@ -30,47 +35,34 @@ df[df.Species == 'Iris-virginica'].plot(kind='scatter',x='PetalLengthCm',y='Peta
 figure2.set_title('Petal Lenght vs Width')
 plt.show()
 
-train,test = train_test_split(df,test_size=0.25)
-print(train.shape)
-print(test.shape)
+X = df[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
+y = df.Species
+X_train, X_test,y_train,Y_test = train_test_split(X,y,test_size=0.2,random_state=5)
+
+models = []
+models.append(('LR',LogisticRegression()))
+models.append(('KNN',KNeighborsClassifier()))
+models.append(('SVM',svm.SVC()))
+models.append(('DECISION TREE',DecisionTreeClassifier()))
+
+results = []
+for name,model in models:
+    kfold = KFold(n_splits=10)
+    cv = cross_val_score(model,X_train,y_train,cv=kfold,scoring='accuracy')
+    results.append((name,cv))
+    print(name+' : ',cv.mean())
+
+print(results)
+"""
+train,test = train_test_split(df,test_size=0.25,random_state=3)
 #!-------------------------------------------------------------------------------------
 X_train = train[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
 y_train = train.Species
 
 X_test = test[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
 y_test = test.Species
-#!------------------------------SVM -------------------------------------------------------
-model_svm  = svm.SVC()
-model_svm.fit(X_train,y_train)
-prediction_svm = model_svm.predict(X_test)
-print('The accuracy of the SVM is : ',metrics.accuracy_score(prediction_svm,y_test))
-#!-------------------------------LOGISTIC REGRESSION-----------------------------------------------------
-model_lr = LogisticRegression()
-model_lr.fit(X_train,y_train)
-prediction_lr = model_lr.predict(X_test)
-print('The accuracy of the Logicistic Regression is: ',metrics.accuracy_score(prediction_lr,y_test))
-#!--------------------------------DECISION TREE-----------------------------------------------------------
-model_dt = DecisionTreeClassifier()
-model_dt.fit(X_train,y_train)
-prediction_dt = model_dt.predict(X_test)
-print('The accuracy of Decision Tree is: ',metrics.accuracy_score(prediction_dt,y_test))
-#!------------------------------------K-NEAREST NEIGHBOURS-------------------------------------------------
-model_knn = KNeighborsClassifier(n_neighbors=3)
-model_knn.fit(X_train,y_train)
-prediction_knn = model_knn.predict(X_test)
-print('The accuracy of the KNN is: ',metrics.accuracy_score(prediction_knn,y_test))
-#!-------------------------------------------KNN various values---------------------------------------------
-"""
-index = list(range(1,11))
-result = pd.Series()
-x =[i for i in range(1,11)]
 
-for i in index:
-    model_knn2 = KNeighborsClassifier(n_neighbors=i)
-    model_knn2.fit(X_train,y_train)
-    prediction_knn2 = model_knn2.predict(X_test)
-    result.append(pd.Series(metrics.accuracy_score(prediction_knn2,y_test)))
-plt.plot(index,result)
-plt.xticks(x)
-plt.show()
+
+
+#!----------------------------------------------------------------------------------------
 """
