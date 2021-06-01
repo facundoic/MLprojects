@@ -19,10 +19,7 @@ def driver():
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content,'html.parser')
         time.sleep(2)
-        """
-        button_order = driver.find_element_by_xpath("//*[@id='trigger']").click()
-        button_popular = driver.find_element_by_xpath("//*[@id='sort-menu']//div[@id='trigger']").click()
-        """
+        
         titles = soup.findAll('a',id='video-title')
         title_text = [title.text for title in titles[:10]]
         
