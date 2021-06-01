@@ -33,7 +33,7 @@ def driver():
     
         print(url+' most viewed videos')
         for i in range(0,10):
-            print('Top {}: {} with {} from {}'.format(i,title_text[i],view_text[i],video_antiquity[i]))
-
+            print('Top {}: {} with {} from {}'.format(i+1,title_text[i],view_text[i],video_antiquity[i]))
+        print('---------------------------------------------------------------------------------')
         time.sleep(2)
 driver()
