@@ -34,7 +34,7 @@ def driver():
             try:
                 print('Top {}: {} with {} from {}'.format(i+1,title_text[i],view_text[i],video_antiquity[i]))
             except IndexError:
-                print('The page is  not found ,probably because the url is wrong.')
+                print('The page is  not found ,probably because the url is wrong')
                 break
         print('---------------------------------------------------------------------------------')
         time.sleep(2)
