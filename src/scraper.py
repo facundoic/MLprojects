@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 
-chromedriver = '/home/facundoic/Desktop/GitHub/ML-repository/MLprojects/chromedriver'
+chromedriver = '/home/facundoic/Desktop/GitHub/Repositories/MLprojects/chromedriver'
 options = webdriver.ChromeOptions()
 options.add_argument('--start-maximized')
 options.add_argument('-ignore-certificate-errors')
@@ -10,6 +10,7 @@ options.add_argument('--incognito')
 
 urls = [
     'DotCSV',
+    'QuantumFracture',
     'HolaMundoDev'
 ]
 def driver():
@@ -30,7 +31,11 @@ def driver():
     
         print(url+' most viewed videos')
         for i in range(0,10):
-            print('Top {}: {} with {} from {}'.format(i+1,title_text[i],view_text[i],video_antiquity[i]))
+            try:
+                print('Top {}: {} with {} from {}'.format(i+1,title_text[i],view_text[i],video_antiquity[i]))
+            except IndexError:
+                print('The page is  not found ,probably because the url is wrong.')
+                break
         print('---------------------------------------------------------------------------------')
         time.sleep(2)
 driver()
