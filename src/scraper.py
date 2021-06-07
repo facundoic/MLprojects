@@ -16,7 +16,7 @@ urls = [
 def driver():
     driver = webdriver.Chrome(chromedriver,chrome_options=options)
     for url in urls:
-        driver.get('https://www.youtube.com/c/{}/videos?view=0&sort=p&flow=grid'.format(url))
+        driver.get('https://www.youtube.com/{}/videos?view=0&sort=p&flow=grid'.format(url))
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content,'html.parser')
         time.sleep(2)
